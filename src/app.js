@@ -8,7 +8,10 @@ import QuizRoutes from "./routes/quizRoutes.js";
 import resultRoutes from "./routes/resultRoutes.js";
 app.use(
   cors({
-    origin: process.env.CLIENT_URL,
+    origin: [
+      "http://localhost:5173",
+      "https://my-quiz-app-frontend.vercel.app",
+    ],
     credentials: true,
   }),
 );
