@@ -1,4 +1,5 @@
 import mongoose from "mongoose";
+import ResultModel from "../models/Result.js";
 
 const userSchema = new mongoose.Schema(
   {
@@ -24,4 +25,15 @@ const userSchema = new mongoose.Schema(
   },
   { timestamps: true },
 );
+
+userSchema.pre("findOneAndDelete", async function (next) {
+  const user = await this.model.findOne(this.getFilter());
+
+  if (user) {
+    await ResultModel.deleteMany({ userId: user._id });
+  }
+
+  next();
+});
+
 export default mongoose.model("User", userSchema);

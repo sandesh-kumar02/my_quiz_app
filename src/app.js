@@ -6,15 +6,26 @@ import authRoutes from "./routes/authRoutes.js";
 import QuestionRoutes from "./routes/questionRoutes.js";
 import QuizRoutes from "./routes/quizRoutes.js";
 import resultRoutes from "./routes/resultRoutes.js";
+
+const allowedOrigins = [
+  "http://localhost:5173",
+  "https://my-quiz-app-frontend.vercel.app",
+];
+
 app.use(
   cors({
-    origin: [
-      "http://localhost:5173",
-      "https://my-quiz-app-frontend.vercel.app",
-    ],
+    origin: function (origin, callback) {
+      if (!origin || allowedOrigins.includes(origin)) {
+        callback(null, true);
+      } else {
+        callback(new Error("Not allowed by CORS"));
+      }
+    },
     credentials: true,
   }),
 );
+
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
