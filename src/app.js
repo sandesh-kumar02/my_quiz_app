@@ -7,13 +7,28 @@ import QuestionRoutes from "./routes/questionRoutes.js";
 import QuizRoutes from "./routes/quizRoutes.js";
 import resultRoutes from "./routes/resultRoutes.js";
 
+const allowedOrigins = [
+  "http://localhost:5173",
+  "https://my-quiz-app-frontend-git-main-sandesh-kumars-projects-adf515f8.vercel.app",
+  "https://my-quiz-app-frontend-flc771ffh-sandesh-kumars-projects-adf515f8.vercel.app",
+];
+
 app.use(
   cors({
-    origin: [
-      "http://localhost:5173",
-      "https://my-quiz-app-frontend-git-main-sandesh-kumars-projects-adf515f8.vercel.app",
-      "https://my-quiz-app-frontend-flc771ffh-sandesh-kumars-projects-adf515f8.vercel.app",
-    ],
+    origin: function (origin, callback) {
+      if (!origin || allowedOrigins.includes(origin)) {
+        callback(null, true);
+      } else {
+        callback(null, true); // 🔥 allow all (temporary fix)
+      }
+    },
+    credentials: true,
+  }),
+);
+
+app.use(
+  cors({
+    origin: true,
     credentials: true,
   }),
 );
