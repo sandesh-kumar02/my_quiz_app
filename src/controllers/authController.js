@@ -110,20 +110,50 @@ export const AllUser = async (req, res) => {
   }
 };
 
+// export const destroyUser = async (req, res) => {
+//   try {
+
+//     console.log("Params ID:", req.params.id);
+//     const user = await userModel.findOneAndDelete({
+//       _id: req.params.id,
+//     });
+
+//     if (!user) {
+//       return res.status(404).json({
+//         message: "User not found",
+//       });
+//     }
+
+//     return res.status(200).json({
+//       message: "User deleted successfully",
+//     });
+//   } catch (error) {
+//     console.log("Delete Error:", error);
+//     return res.status(500).json({
+//       message: "Server error",
+//     });
+//   }
+// };
+
 export const destroyUser = async (req, res) => {
   try {
-    const user = await userModel.findByIdAndDelete(req.params.id);
-    console.log(user);
-    if (!user) {
+    const deletedUser = await userModel.findByIdAndDelete(req.params.id);
+    console.log(deletedUser);
+
+     if (!deletedUser) {
       return res.status(404).json({
         message: "User not found",
       });
     }
-    res.status(200).json({
-      message: "User destroy successfully",
-      user,
+
+    return res.status(200).json({
+      message: "Done",
     });
   } catch (error) {
-    console.log(error);
+    console.log("Delete Error:", error);
+
+    return res.status(500).json({
+      message: "Server error",
+    });
   }
 };

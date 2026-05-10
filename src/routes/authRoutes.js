@@ -1,3 +1,5 @@
+console.log("AUTH CONTROLLER LOADED");
+
 import { Router } from "express";
 import {
   AllUser,
@@ -45,6 +47,15 @@ router.get("/users", protectMiddleware, adminMiddleware, AllUser);
  * @desc All Users
  */
 
-router.delete("/users/:id", protectMiddleware, destroyUser);
+// router.delete("/users/:id", protectMiddleware, destroyUser);
+router.delete("/users/:id", destroyUser);
+
+// router.delete("/users/:id", (req, res) => {
+//   console.log("DELETE ROUTE HIT");
+
+//   return res.json({
+//     success: true,
+//   });
+// });
 
 export default router;

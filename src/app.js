@@ -19,16 +19,11 @@ app.use(
       if (!origin || allowedOrigins.includes(origin)) {
         callback(null, true);
       } else {
-        callback(null, true); // 🔥 allow all (temporary fix)
+        callback(new Error("Not allowed by CORS"));
       }
     },
-    credentials: true,
-  }),
-);
-
-app.use(
-  cors({
-    origin: true,
+    methods: ["GET", "POST", "PUT", "DELETE"],
+    allowedHeaders: ["Content-Type", "Authorization"],
     credentials: true,
   }),
 );

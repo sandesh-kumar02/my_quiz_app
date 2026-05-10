@@ -1,13 +1,33 @@
 import jwt from "jsonwebtoken";
 
 export const protectMiddleware = (req, res, next) => {
-  const token = req.headers.authorization?.split(" ")[1];
-  if (!token) {
-    return res.status(401).json({ message: "No token" });
+  try {
+    console.log("HEADERS:", req.headers);
+
+    const authHeader = req.headers.authorization;
+
+    console.log("AUTH HEADER:", authHeader);
+
+    if (!authHeader || !authHeader.startsWith("Bearer ")) {
+      return res.status(401).json({
+        message: "No or invalid token format",
+      });
+    }
+
+    const token = authHeader.split(" ")[1];
+
+    const decoded = jwt.verify(token, process.env.JWT_SECRET);
+
+    req.user = decoded;
+
+    next();
+  } catch (error) {
+    console.log("Middleware Error:", error);
+
+    return res.status(500).json({
+      message: "Internal server error",
+    });
   }
-  const decode = jwt.verify(token, process.env.JWT_SECRET);
-  req.user = decode;
-  next();
 };
 
 export const adminMiddleware = (req, res, next) => {
