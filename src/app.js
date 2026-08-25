@@ -9,8 +9,7 @@ import resultRoutes from "./routes/resultRoutes.js";
 
 const allowedOrigins = [
   "http://localhost:5173",
-  "https://my-quiz-app-frontend-git-main-sandesh-kumars-projects-adf515f8.vercel.app",
-  "https://my-quiz-app-frontend-flc771ffh-sandesh-kumars-projects-adf515f8.vercel.app",
+  "https://my-quiz-app-frontend.vercel.app",
 ];
 
 app.use(
